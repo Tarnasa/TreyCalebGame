@@ -6,11 +6,15 @@ from pygame.locals import *
 
 from constants import *
 
+from level import *
+
 pygame.init()
 fpsClock = pygame.time.Clock()
 
-windowSurfaceObj = pygame.display.set_mode((800, 600))
+windowSurfaceObj = pygame.display.set_mode((GAME_WIDTH, GAME_HEIGHT))
 pygame.display.set_caption(TITLE_MAIN)
+
+map1 = Level(GAME_WIDTH / TILE_WIDTH, GAME_HEIGHT / TILE_HEIGHT)
 
 while True:
 	windowSurfaceObj.fill(BLACK)

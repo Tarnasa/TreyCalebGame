@@ -4,6 +4,11 @@ AUTHORS = 'Trey, Caleb'
 
 TITLE_MAIN = 'Awesome Game'
 
+TILE_WIDTH = 32
+TILE_HEIGHT = 32
+GAME_WIDTH = 640
+GAME_HEIGHT = 512
+
 #	Colors
 
 BLACK = 0, 0, 0
