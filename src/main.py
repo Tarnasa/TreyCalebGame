@@ -16,6 +16,7 @@ while True:
 	windowSurfaceObj.fill(BLACK)
 
 	pygame.draw.line(windowSurfaceObj, WHITE, (16, 256), (512, 32), 4)
+	pygame.draw.circle(windowSurfaceObj, WHITE, (300,15), 20, 0)
 
 	for event in pygame.event.get():
 		if event.type == QUIT:
