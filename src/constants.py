@@ -13,3 +13,8 @@ GAME_HEIGHT = 512
 
 BLACK = 0, 0, 0
 WHITE = 255, 255, 255
+
+#	tileLayer stuff
+
+CHUNK_WIDTH = 512
+CHUNK_HEIGHT = 512

@@ -5,8 +5,9 @@ import pygame, sys
 from pygame.locals import *
 
 from constants import *
-
-from level import *
+from view import *
+from room import *
+from tileObj import *
 
 pygame.init()
 fpsClock = pygame.time.Clock()
@@ -17,20 +18,21 @@ pygame.display.set_caption(TITLE_MAIN)
 ballImage = pygame.image.load('../res/circleRobot.png')
 tileImage = pygame.image.load('../res/tileSingle.png')
 
-map1 = Level(GAME_WIDTH / TILE_WIDTH, GAME_HEIGHT / TILE_HEIGHT)
-map1block1 = TileObj()
-map1block1.setImage(tileImage)
-map1.data[0][0] = map1block1
+room1 = Room(1024, 1024)
+
+mainView = View(GAME_WIDTH, GAME_HEIGHT, room1.w, room1.h)
+
+room1.addTile(0, TileObj(64, 32).setImage(tileImage))
 
 while True:
 	windowSurfaceObj.fill(BLACK)
 
-	pygame.draw.line(windowSurfaceObj, WHITE, (16, 256), (512, 32), 4)
-	pygame.draw.circle(windowSurfaceObj, WHITE, (300,15), 20, 0)
+	room1.draw(windowSurfaceObj, mainView)
 
-	map1.draw(windowSurfaceObj, 0, 0, GAME_WIDTH, GAME_HEIGHT)
+	#pygame.draw.line(windowSurfaceObj, WHITE, (16, 256), (512, 32), 4)
+	#pygame.draw.circle(windowSurfaceObj, WHITE, (300,15), 20, 0)
 
-	windowSurfaceObj.blit(ballImage, (0, 0))
+	windowSurfaceObj.blit(ballImage, (128, 64))
 
 	for event in pygame.event.get():
 		if event.type == QUIT:
