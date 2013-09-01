@@ -1,3 +1,14 @@
+# Unity
+Unity/.DS_Store
+Unity/Library
+Unity/Library/*
+Unity/*.csproj
+Unity/*.sln
+Unity/*.userprefs
+Unity/Temp
+Unity/*.pidb
+Unity/Build
+
 *.py[cod]
 
 # C extensions
