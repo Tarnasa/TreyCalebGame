@@ -3,9 +3,9 @@ using System.Collections;
 
 public class BasicControl : MonoBehaviour {
 	
-	public const float moveSpeed = 0.1F;
+	public const float moveSpeed = 18.0F;
 	public const float decel = 0.05F;
-	public const float accel = 0.07F;
+	public const float accel = 1.5F;
 	public const float gravity = 9.8F;
 	
 	public Vector3 velocity = Vector3.zero;
@@ -38,6 +38,6 @@ public class BasicControl : MonoBehaviour {
 			velocity = velocity.normalized * moveSpeed;
 		}
 		// Move
-		controller.Move(velocity);
+		controller.Move(velocity * Time.deltaTime);
 	}
 }
