@@ -108,8 +108,9 @@ public class CameraFollowRoute : MonoBehaviour {
 					
 					goalForward = getCNode(prevPNode).transform.forward * (1 - tRay)
 						+ getCNode(nextPNode).transform.forward * tRay;
-					goalPosition = getCNode(prevPNode).transform.position * (1 - tRay)
-						+ getCNode(nextPNode).transform.position * tRay;
+					goalPosition = calculateGoalPosition(getCNode(prevPrevPNode).transform.position,
+						getCNode(prevPNode).transform.position, getCNode(nextPNode).transform.position,
+						getCNode(nextNextPNode).transform.position, tRay);
 					
 					// Check if the target has moved to another node
 					
@@ -147,8 +148,19 @@ public class CameraFollowRoute : MonoBehaviour {
 					
 					goalForward = getCNode(prevPNode).transform.forward * (1 - tNext)
 						+ getCNode(nextPNode).transform.forward * tNext;
-					goalPosition = getCNode(prevPNode).transform.position * (1 - tNext)
-						+ getCNode(nextPNode).transform.position * tNext;
+					if (tNext < 0.5F)
+					{
+						goalPosition = getCNode(prevPNode).transform.position * (1 - tNext)
+							+ getCNode(nextPNode).transform.position * tNext;
+					}
+					else
+					{
+						goalPosition = quadraticBezier(
+							(getCNode(prevPNode).transform.position + getCNode(nextPNode).transform.position) / 2,
+							getCNode(nextPNode).transform.position,
+							(getCNode(nextPNode).transform.position + getCNode(nextNextPNode).transform.position) / 2,
+							tNext - 0.5F);
+					}
 					
 					// Check if the target has moved to another node
 					if (tNext > 1)
@@ -177,8 +189,9 @@ public class CameraFollowRoute : MonoBehaviour {
 					
 					goalForward = getCNode(prevPNode).transform.forward * (1 - tRay)
 						+ getCNode(nextPNode).transform.forward * tRay;
-					goalPosition = getCNode(prevPNode).transform.position * (1 - tRay)
-						+ getCNode(nextPNode).transform.position * tRay;
+					goalPosition = calculateGoalPosition(getCNode(prevPrevPNode).transform.position,
+						getCNode(prevPNode).transform.position, getCNode(nextPNode).transform.position,
+						getCNode(nextNextPNode).transform.position, tRay);
 					
 					// Check if the target has moved to another node
 					
@@ -219,8 +232,19 @@ public class CameraFollowRoute : MonoBehaviour {
 					
 					goalForward = getCNode(prevPNode).transform.forward * (1 - tPrev)
 						+ getCNode(nextPNode).transform.forward * tPrev;
-					goalPosition = getCNode(prevPNode).transform.position * (1 - tPrev)
-						+ getCNode(nextPNode).transform.position * tPrev;
+					if (tPrev > 0.5F)
+					{
+						goalPosition = getCNode(prevPNode).transform.position * (1 - tPrev)
+							+ getCNode(nextPNode).transform.position * tPrev;
+					}
+					else
+					{
+						goalPosition = quadraticBezier(
+							(getCNode(prevPrevPNode).transform.position + getCNode(prevPNode).transform.position) / 2,
+							getCNode(prevPNode).transform.position,
+							(getCNode(prevPNode).transform.position + getCNode(nextPNode).transform.position) / 2,
+							tPrev + 0.5F);
+					}
 					
 					// Check if the target has moved to another node
 					if (tPrev < 0)
@@ -232,7 +256,7 @@ public class CameraFollowRoute : MonoBehaviour {
 				}
 				else if (prevPNodes.Count == 0)
 				{
-					//Only Node in system :(	
+					//Only 2 Nodes in system :(	
 				}
 				// Split previous path (not likely to happen)
 				else
@@ -258,8 +282,19 @@ public class CameraFollowRoute : MonoBehaviour {
 					
 					goalForward = getCNode(prevPNode).transform.forward * (1 - tPrev)
 						+ getCNode(nextPNode).transform.forward * tPrev;
-					goalPosition = getCNode(prevPNode).transform.position * (1 - tPrev)
-						+ getCNode(nextPNode).transform.position * tPrev;
+					if (tPrev > 0.5F)
+					{
+						goalPosition = getCNode(prevPNode).transform.position * (1 - tPrev)
+							+ getCNode(nextPNode).transform.position * tPrev;
+					}
+					else
+					{
+						goalPosition = quadraticBezier(
+							(getCNode(prevPrevPNode).transform.position + getCNode(prevPNode).transform.position) / 2,
+							getCNode(prevPNode).transform.position,
+							(getCNode(prevPNode).transform.position + getCNode(nextPNode).transform.position) / 2,
+							tPrev + 0.5F);
+					}
 					
 					// Check if the target has moved to another node
 					if (tPrev < 0)
@@ -292,8 +327,9 @@ public class CameraFollowRoute : MonoBehaviour {
 					
 					goalForward = getCNode(prevPNode).transform.forward * (1 - tRay)
 						+ getCNode(nextPNode).transform.forward * tRay;
-					goalPosition = getCNode(prevPNode).transform.position * (1 - tRay)
-						+ getCNode(nextPNode).transform.position * tRay;
+					goalPosition = calculateGoalPosition(getCNode(prevPrevPNode).transform.position,
+						getCNode(prevPNode).transform.position, getCNode(nextPNode).transform.position,
+						getCNode(nextNextPNode).transform.position, tRay);
 					
 					// Check if the target has moved to another node
 					
@@ -334,8 +370,19 @@ public class CameraFollowRoute : MonoBehaviour {
 					
 					goalForward = getCNode(prevPNode).transform.forward * (1 - tNext)
 						+ getCNode(nextPNode).transform.forward * tNext;
-					goalPosition = getCNode(prevPNode).transform.position * (1 - tNext)
-						+ getCNode(nextPNode).transform.position * tNext;
+					if (tNext < 0.5F)
+					{
+						goalPosition = getCNode(prevPNode).transform.position * (1 - tNext)
+							+ getCNode(nextPNode).transform.position * tNext;
+					}
+					else
+					{
+						goalPosition = quadraticBezier(
+							(getCNode(prevPNode).transform.position + getCNode(nextPNode).transform.position) / 2,
+							getCNode(nextPNode).transform.position,
+							(getCNode(nextPNode).transform.position + getCNode(nextNextPNode).transform.position) / 2,
+							tNext - 0.5F);
+					}
 					
 					// Check if the target has moved to another node
 					if (tNext > 1)
@@ -516,5 +563,27 @@ public class CameraFollowRoute : MonoBehaviour {
 	{
 		// TODO: cache squared distance on startup
 		return -Vector3.Dot(start - point, end - start) / Vector3.SqrMagnitude(end - start);
+	}
+	
+	Vector3 calculateGoalPosition(Vector3 prevPrevPos, Vector3 prevPos, Vector3 nextPos, 
+		Vector3 nextNextPos, float t)
+	{
+		if (t < 0.5)
+		{
+			return quadraticBezier((prevPrevPos + prevPos) / 2,
+				prevPos, (prevPos + nextPos) / 2, t + 0.5F);	
+		}
+		else
+		{
+			return quadraticBezier((prevPos + nextPos) / 2,
+				nextPos, (nextPos + nextNextPos) / 2, t - 0.5F);	
+		}
+	}
+	
+	Vector3 quadraticBezier(Vector3 start, Vector3 mid, Vector3 end, float t)
+	{
+		Vector3 midSM = (mid - start) * t + start;
+		Vector3 midME = (end - mid) * t + mid;
+		return (midME - midSM) * t + midSM;
 	}
 }
